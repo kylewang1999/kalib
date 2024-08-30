@@ -84,9 +84,9 @@ pip install -e .
 > DOCKER_BUILDKIT=1 docker build -t kalib_build --target build  --progress=plain . 2>&1 | tee build.log
 > ```
 
-Optionally, you can use foreground mask to refine the keypoint tracking module. To do so, you need to install the following dependencies:
+> **📣 Attention :**, Optionally, you can use foreground mask to refine the keypoint tracking module. To do so, you need to install the following dependencies:
 
-4. Download SAM checkpoints.
+4. (**Optional**) Download SAM checkpoints.
 
 ```bash
 bash scripts/bootstrap_sam.sh
@@ -94,7 +94,7 @@ bash scripts/bootstrap_sam.sh
 
 > Note: If you wanna specify the sam checkpoints path(the default is \_sam_vit_l), plz modify default value in [sam_type](./easycalib/config/parse_demo_argument.py#L49) and [sam_checkpoint_path](./easycalib/config/parse_demo_argument.py#L43) or pass it as an argument.
 
-3. Grounded-SAM installation.
+5. (**Optional**) Grounded-SAM installation.
 
 Please refer to [Grounded-SAM readme](https://github.com/IDEA-Research/Grounded-Segment-Anything/blob/main/README.md).
 
@@ -106,7 +106,7 @@ Alternatively, you can choose to setup the grounded-sam env with `bash scripts/b
 > DOCKER_BUILDKIT=1 docker build -t kalib_grounded_sam --target sam_included  --progress=plain . 2>&1 | tee build.log
 > ```
 
-4. Install cotracker if you wanna dabble into different keypoint-tracking module.
+6. (**Optional**) Install cotracker if you wanna dabble into different keypoint-tracking module.
 
 Please refer to [CoTracker readme](https://github.com/facebookresearch/co-tracker/blob/main/README.md)
 Alternatively, you can choose to setup the cotracker env with `bash scripts/bootstrap_cotracker.sh $PWD`
@@ -140,7 +140,7 @@ When the download completes ,the folder structure of `./dataset` should look lik
 
 ## ❖ Usage
 
-1. Running the camera calibration pipeline (this script loads the images and jsons specified by `dataset_dir`, shows a window prompting the user for one single-click(Use _Esc_ to quit the window), passes the annotated **TCP** point to kpt tracking module, and finally calls the **PNP** module to infer the camera pose.). A file with path `<your_dataset_dir>/Kalib/Kalib_outputs/pnp_inference_res.pkl` will be saved to disk afterwards, it contains keys: `avg_trans_err,avg_rot_err,avg_reprojection_error,pnp_transform_predicted_mats`. Its format can be known in [here](./easycalib_demo.py#L205).
+1. Running the camera calibration pipeline (this script loads the images and jsons specified by `dataset_dir`, shows a window prompting the user for one single-click(Use _Esc_ to quit the window), passes the **initially** annotated **TCP** point to kpt tracking module, and finally calls the **PNP** module to infer the camera pose.). A file with path `<your_dataset_dir>/Kalib/Kalib_outputs/pnp_inference_res.pkl` will be saved to disk afterwards, it contains keys: `avg_trans_err,avg_rot_err,avg_reprojection_error,pnp_transform_predicted_mats`. Its format can be known in [here](./easycalib_demo.py#L205).
 
 ```bash
 grounded_sam_repo_path=$PWD/third_party/grounded_segment_anything/
@@ -162,7 +162,7 @@ Parameters:
 -   `renderer_device_id`, `tracking_device_id`, `mask_inference_device_id`, the gpu_id for rendering mask, tracking annotated TCP and use SAM/Grounded-SAM to inference foreground mask.
 -   `keypoint_ids`: choose what keypoints to be tracked. The keypoint configurations are specified in [franka_config.json](./easycalib/config/franka_config.json). **NOTE**: the num of keypoint_ids should be consistent with your number of clicks in the prompting window, otherwise it is undefined behaviour.
 
-2. Running the synthetic data generation pipeline.
+2. (**Optional**) If you wanna generate synthetic data and run the synthetic data generation pipeline:
    We use pyrfuniverse as our simulation environment, please refer to [pyrfuniverse](https://github.com/robotflow-initiative/pyrfuniverse) for more details.
    Alternatively, you can choose to setup the pyrfuniverse env with `bash scripts/bootstrap_pyrfuniverse.sh $PWD`
 
@@ -176,7 +176,7 @@ python ./tests/sim_franka/test_gaussian_trajectory.py
 > DOCKER_BUILDKIT=1 docker build -t kalib_rfu --target pyrfuniverse_included  --progress=plain . 2>&1 | tee build.log
 > ```
 
-3. Running the _DROID_ processing and data conversion script. Please refer to [droid](https://github.com/droid-dataset/droid) for more details.
+3. (**Optional**) If you wanna test our pipeline on other takes in _DROID_ dataset, you can run the _DROID_ processing and data conversion script. Please refer to [droid](https://github.com/droid-dataset/droid) for more details.
 
 > **📣 Attention :**, you have to setup [pyzed_sdk](https://www.stereolabs.com/docs/app-development/python/install) in your conda env for this step, check out more info about this in [bootstrap_droid.sh](./scripts/bootstrap_droid.sh#L11).
 
