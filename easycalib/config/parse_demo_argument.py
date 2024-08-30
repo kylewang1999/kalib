@@ -76,6 +76,12 @@ def parse_easycalib_default_args(cli_input: bool = True):
         default="./third_party/spatial_tracker",
         help="path to spatial tracker repo.",
     )
+    parser.add_argument(
+        "--cotracker_repo_path",
+        type=str,
+        default="./third_party/cotracker",
+        help="path to cotracker repo.",
+    )
     parser.add_argument("--text_prompt", type=str, default="robot arm", help="the text prompt to grouded-sam for foreground mask inference.")
     parser.add_argument(
         "--grounded_sam_script", type=str, default="grounded_sam_demo.py"
@@ -180,7 +186,7 @@ def parse_easycalib_default_args(cli_input: bool = True):
     # ! load .yaml manipulator config files.
     assert os.path.exists(args.manipulator_config_path)
     with open(args.manipulator_config_path, "r") as file:
-        config = jsonsrc_calib.load(file)
+        config = json.load(file)
 
         # Extract manipulator name
         manipulator_name = config["manipulator"]["name"]
