@@ -89,7 +89,7 @@ pip install -e .
 4. (**Optional**) Download SAM checkpoints.
 
 ```bash
-bash scripts/bootstrap_sam.sh
+bash scripts/bootstrap_sam.sh $PWD
 ```
 
 > Note: If you wanna specify the sam checkpoints path(the default is \_sam_vit_l), plz modify default value in [sam_type](./easycalib/config/parse_demo_argument.py#L49) and [sam_checkpoint_path](./easycalib/config/parse_demo_argument.py#L43) or pass it as an argument.
@@ -121,7 +121,7 @@ Alternatively, you can choose to setup the cotracker env with `bash scripts/boot
 
 1. Synthetic dataset generated with [pyrfuniverse](https://github.com/robotflow-initiative/pyrfuniverse): `all_exp_pyrfuniverse_sim_data`.
 2. Our experimental results reported in the paper use the following _DROID_ takes: `exp_droid_list/exp_droid_list.txt`.
-3. Download test sample data for both sim and _DROID_: test_sample_droid_data, `test_sample_sim_data`.
+3. Download test sample data for both sim and _DROID_: `test_sample_droid_data`, `test_sample_sim_data`.
 4. Download test sampel data for running procesing script on _DROID_: `test_extract_droid_data`.
 
 Plz download these data from this [google drive link](https://drive.google.com/drive/folders/1gAONRRWb03m35hICTFaAhAC52EN8A9ba?usp=sharing) or instead use [this script](./dataset/populate_data.sh) to populate data in `./dataset` folder.
