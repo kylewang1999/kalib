@@ -8,11 +8,13 @@ import sys
 import numpy as np
 import json
 import os.path as osp
+from os.path import dirname
 
 import numpy as np
 import torch
 import torch.nn as nn
 import trimesh
+sys.path.append(dirname(dirname(dirname(__file__))))
 from easycalib.utils.setup_logger import setup_logger
 logger = setup_logger(__name__)
 
